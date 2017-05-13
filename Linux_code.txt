@@ -1,0 +1,30 @@
+DISPLAY=:0 firefox
+DISPLAY=:0 xeyes
+
+git clone --recurse-submodules https://github.com/tensorflow/tensorflow
+
+$ python
+import tensorflow as tf
+hello = tf.constant('Hello, TensorFlow!')
+sess = tf.Session()
+print sess.run(hello)
+
+a = tf.constant(10)
+b = tf.constant(32)
+print sess.run(a+b)
+
+
+
+
+如果感觉每次安装都手动指定安装源麻烦的话，也可以配置pip更新源 
+在主目录下创建.pip文件夹
+
+mkdir ~/.pip
+1
+1
+然后在该目录下创建pip.conf文件编写如下内容：
+
+[global]
+trusted-host =  pypi.douban.com
+index-url = http://pypi.douban.com/simple
+
