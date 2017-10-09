@@ -310,30 +310,6 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
     }
 
 
-    private void initToolbar()
-    {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mToolBarTextView = (TextView) findViewById(R.id.text_view_toolbar_title);
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null)
-        {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-        mToolbar.setNavigationIcon(R.drawable.btn_back);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        mToolBarTextView.setGravity(Gravity.CENTER);
-        mToolBarTextView.setText("点击颜色进行跟踪");
-
-    }
-
-
     @Override
     public boolean onCreateOptionsMenu(final Menu menu)
     {
@@ -342,21 +318,6 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.context_menu:
-                if(mIsColorSelected==true) {
-                    Toast.makeText(this, "已选中要跟踪的颜色 ", Toast.LENGTH_SHORT).show();
-                    ok_flag=1;
-                    sport_count = 0;
-                }
-                else      Toast.makeText(this, "请先选择要跟踪的颜色 ", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onBackPressed()
