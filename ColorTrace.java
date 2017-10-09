@@ -125,11 +125,9 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(getResources().getColor(R.color.lotine_background));
 
-        //安卓6.0权限管理
         if(Build.VERSION.SDK_INT>=23){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            //申请WRITE_EXTERNAL_STORAGE权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                     TAKE_PHOTO_REQUEST_CODE);
         }
@@ -143,7 +141,6 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
         // mOpenCvCameraView.setCameraIndex(this);
-        // mOpenCvCameraView.setMaxFrameSize(480, 480);//帧率优化
     }
 
 
@@ -230,9 +227,7 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
         mBlobColorHsv = Core.sumElems(touchedRegionHsv);
         int pointCount = touchedRect.width*touchedRect.height;
         for (int i = 0; i < mBlobColorHsv.val.length; i++)
-            mBlobColorHsv.val[i] /= pointCount;
-
-        mBlobColorRgba = converScalarHsv2Rgba(mBlobColorHsv);  //获取状态栏颜色
+            mBlobColorHsv.val[i] /= pointCount
 
         //
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -263,13 +258,13 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
 
         Core.transpose(this.mRgba, this.mRgbaT);
         Imgproc.resize(this.mRgbaT, this.mRgbaF, this.mRgbaF.size(), 0.0D, 0.0D, 0);
-        Core.flip(this.mRgbaF, this.mRgba, 1);  //图像旋转
+        Core.flip(this.mRgbaF, this.mRgba, 1);  
 
         if (mIsColorSelected)
         {
             mDetector.process(mRgba);
             List<MatOfPoint> contours = mDetector.getContours();
-            Log.v(TAG, "Contours count: " + contours.size());//输出区域色块总数
+            Log.v(TAG, "Contours count: " + contours.size());
             Imgproc.drawContours(mRgba, contours, -1, CONTOUR_COLOR);
 
             localObject = new Message();
@@ -287,24 +282,7 @@ public class ColorTrace extends AppCompatActivity implements View.OnTouchListene
                 localBundle.putInt("size", k);
                 Log.e("x:",i+"y:"+j+"size:"+k);
                 ((Message)localObject).what = 0;
-                ((Message)localObject).setData(localBundle);
-
-                if(flag!=0&&flag%2==1)
-                {
-                    flag++;
-                    //sport_count++;
-                }
-                //this.mHandler.sendMessage((Message)localObject);
-            }
-            else if(flag%2==0&&ok_flag==1)
-            {
-                flag++;
-                ++sport_count;
-                final Data sportdata = (Data)getApplication();
-                sportdata.setB(""+sport_count+"次");
-                Log.e("0时次数",""+sport_count);
-                Log.e("标志位",""+flag);
-            }
+                ((Message)localObject).setData(localBundle)
 
 			/*Mat colorLabel = mRgba.submat(0, 38, 0, 800); //间距为0，写38行，800列
 			 colorLabel.setTo(mBlobColorRgba);*/
